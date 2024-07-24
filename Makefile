@@ -1,4 +1,4 @@
-CFLAGS=-Wall -Wextra -O2
+CFLAGS=-Wall -Wextra -g
 LFLAGS=-lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
 Blast: libBlast.so

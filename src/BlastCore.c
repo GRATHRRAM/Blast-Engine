@@ -1,13 +1,15 @@
 #define BLASTCORE_IMPLEMENTATION
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
+#include <vulkan/vulkan.h>
 #include <stdio.h>
 
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 
 GLFWwindow* InitWindow(const int WinodwWidth, const int WindowHeight, const char *Title);
-void CloseWindow(GLFWwindow *Window);
+void InitVulkan(VkInstance *instance, const char* AppName, uint32_t VersionMajor, uint32_t VersionMinor, uint32_t VersionPatch);
+void DestroyVulcanAndWindow(GLFWwindow *Window, VkInstance instance);
 
 GLFWwindow* InitWindow(const int width,const int height, const char* title) {
     if (!glfwInit()) {
@@ -35,8 +37,38 @@ GLFWwindow* InitWindow(const int width,const int height, const char* title) {
     return window;
 }
 
+void InitVulkan(VkInstance *instance, const char* AppName, uint32_t VersionMajor, uint32_t VersionMinor, uint32_t VersionPatch) {
+    VkApplicationInfo appInfo;
+    appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+    appInfo.pApplicationName = AppName;
+    appInfo.applicationVersion = VK_MAKE_VERSION(VersionMajor, VersionMinor, VersionPatch);
+    appInfo.pEngineName = "Blast Engine";
+    appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+    appInfo.apiVersion = VK_API_VERSION_1_3;
 
-void CloseWindow(GLFWwindow *Window) {
+    VkInstanceCreateInfo createInfo;
+    createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+    createInfo.pApplicationInfo = &appInfo;
+
+    uint32_t glfwExtensionCount = 0;
+    const char** glfwExtensions;
+
+    glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+
+    createInfo.enabledExtensionCount = glfwExtensionCount;
+    createInfo.ppEnabledExtensionNames = glfwExtensions;
+
+    createInfo.enabledLayerCount = 0;
+    
+
+    if (vkCreateInstance(&createInfo, NULL, instance) != VK_SUCCESS) {
+        printf("failed to create instance!\n");
+    }
+}
+
+
+void DestroyVulcanAndWindow(GLFWwindow *Window, VkInstance instance) {
+    vkDestroyInstance(instance, NULL);
     glfwDestroyWindow(Window);
     glfwTerminate();
 }
