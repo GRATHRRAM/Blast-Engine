@@ -1,6 +1,8 @@
 #ifndef BLAST_H
 #define BLAST_H
+#include <GLFW/glfw3.h>
 
-void InitWindow(const int WinodwWidth, const int WindowHeight, char *Title);
+GLFWwindow* InitWindow(const int WinodwWidth, const int WindowHeight, const char *Title);
+void CloseWindow(GLFWwindow *Window);
 
 #endif
