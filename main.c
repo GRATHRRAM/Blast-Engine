@@ -1,13 +1,13 @@
 #include "Blast.h"
 
 int main() {
-    GLFWwindow *Window = InitWindow(1280,720,"Vulcan");
+    GLFWwindow *window = InitWindow(1280,720,"Vulcan");
 
-     while(!glfwWindowShouldClose(Window)) {
+    while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
     }
 
-    CloseWindow(Window);
+    CloseWindow(window);
 
     return 0;
 }

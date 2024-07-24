@@ -10,7 +10,6 @@ GLFWwindow* InitWindow(const int WinodwWidth, const int WindowHeight, const char
 void CloseWindow(GLFWwindow *Window);
 
 GLFWwindow* InitWindow(const int width,const int height, const char* title) {
-    // Initialize the GLFW library
     if (!glfwInit()) {
         printf("Failed to initialize GLFW\n");
         return NULL;
