@@ -38,7 +38,7 @@ GLFWwindow* InitWindow(const int width,const int height, const char* title) {
 }
 
 void InitVulkan(VkInstance *instance, const char* AppName, uint32_t VersionMajor, uint32_t VersionMinor, uint32_t VersionPatch) {
-    VkApplicationInfo appInfo;
+    VkApplicationInfo appInfo = {0};
     appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
     appInfo.pApplicationName = AppName;
     appInfo.applicationVersion = VK_MAKE_VERSION(VersionMajor, VersionMinor, VersionPatch);
@@ -46,9 +46,10 @@ void InitVulkan(VkInstance *instance, const char* AppName, uint32_t VersionMajor
     appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
     appInfo.apiVersion = VK_API_VERSION_1_3;
 
-    VkInstanceCreateInfo createInfo;
+    VkInstanceCreateInfo createInfo = {0};
     createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     createInfo.pApplicationInfo = &appInfo;
+    
 
     uint32_t glfwExtensionCount = 0;
     const char** glfwExtensions;
